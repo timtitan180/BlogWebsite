@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 
@@ -59,14 +61,15 @@ public class BlogController {
 
     //Method to delete a blog from the database and redirect back to the create blog page
 
-    @GetMapping("/blogs/delete/{id}")
-    public String deleteBlog (@PathVariable(name = "id") Integer id) {
-        ModelAndView page = new ModelAndView("blogs");
+    @GetMapping("blogs/delete/{id}")
+    public ModelAndView deleteBlog (@PathVariable(name = "id") Integer id, HttpServletResponse response) {
+        ModelAndView page = new ModelAndView("showBlogs");
         blogRepository.deleteById(id);
         LOG.info("Blog has been deleted");
         page.addObject("id", id);
         page.addObject("deleteMessage","Blog has been deleted");
-        return "redirect:/blogs";
+        page.addObject("remainingBlogs",blogRepository.findAll());
+        return page;
     }
 
     //Method fetches all the saved blogs in the database and shows them using JSP pages (see webapp/WEBINF/jsp for more details)

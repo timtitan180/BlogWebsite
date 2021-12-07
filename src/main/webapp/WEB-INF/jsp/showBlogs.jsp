@@ -28,6 +28,12 @@
             color:white;
             background-color:gray;
         }
+
+        .blog-container {
+            height: 200px;
+            width:400px;
+            box-shadow: 0 0 2px 1px gray;
+        }
     </style>
 </head>
 <body>
@@ -40,7 +46,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/blogs">Add Blog</a>
+                    <a class="nav-link active" aria-current="page" href="/blogs/createblog">Add Blog</a>
                 </li>
             </ul>
         </div>
@@ -50,12 +56,23 @@
     <h2>Blogs:</h2>
     <div class="blogs">
     <c:forEach items="${blogs}" var="blog">
+        <div class="blog-container">
         <p>${blog.blogTitle}</p>
-        <p>${blog.blogBody}</p> <a class="edit" href="/blogs/edit/${blog.id}">Edit Blog</a> <span><a class="delete" href="/blogs/delete/${blog.id}">Delete Blog</a></span></p>
-    </c:forEach>
+        <p>${blog.blogBody}</p>
+            <a class="edit btn" href="${pageContext.request.contextPath }/blogs/edit/${blog.id}">Edit Blog</a> <span><a class="delete btn" href="${pageContext.request.contextPath }/blogs/delete/${blog.id}">Delete Blog</a></span></p>
+        </div>
+            </c:forEach>
+        <div>
         <c:if test="${not empty deleteMessage}">
+            <c:forEach items="${remainingBlogs}" var="remainingBlog">
+                <div class="blog-container">
+                <p>${remainingBlog.blogTitle}</p>
+                <p>${remainingBlog.blogBody}</p> <a class="edit" href="${pageContext.request.contextPath }/blogs/edit/${blog.id}">Edit Blog</a> <span><a class="delete" href="${pageContext.request.contextPath }/blogs/delete/${blog.id}">Delete Blog</a></span></p>
+                </div>
+            </c:forEach>
             <div><p>${deleteMessage}</p></div>
         </c:if>
+        </div>
     </div>
 </div>
 </body>

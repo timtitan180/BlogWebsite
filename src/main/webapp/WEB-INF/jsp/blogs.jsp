@@ -25,7 +25,8 @@
         </div>
     </div>
 </nav>
-<form method="POST" action="blogs/createblog">
+<c:out value="${sessionScope.User}"/>
+<form method="POST" action="createblog">
 <div style="border-radius:10px;border:1px solid gray;margin-top:50px;margin-left:700px;height: 400px;width:400px;padding-right:20px;padding-left:20px">
     <div class="mb-3">
     <label for="exampleFormControlInput1" class="form-label">Blog Title</label>
